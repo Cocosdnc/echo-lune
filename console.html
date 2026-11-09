@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Console de tir · ÉCHO-LUNE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Exo+2:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body>
+<canvas id="stars"></canvas>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="index.html"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#3fe0ff" stroke-width="1.5"/><circle cx="27" cy="13" r="5" fill="#d8e7ff"/><path d="M6 30 L27 13" stroke="#ff4d6d" stroke-width="1.6"/><path d="M27 13 L10 33" stroke="#4dff9a" stroke-width="1.2" stroke-dasharray="2 2"/><circle cx="20" cy="20" r="13" fill="none" stroke="#3fe0ff" stroke-width=".6" opacity=".5"/></svg><div><b>ÉCHO-LUNE</b><small>Réseau Pacifique de télémétrie laser</small></div></a>
+<nav><a href="index.html">Accueil</a><a href="lune.html">La Lune</a><a href="stations.html">Stations</a><a href="console.html" class=on>Console de tir</a></nav><div class="status-pill">LIAISON ACTIVE</div></div></header>
+<main>
+<div class="page-hero"><div class="wrap"><div class="sec-head"><span class="kicker">// Console de tir · Station de Bouraké · accès élève</span><h2>Envoyer une impulsion laser</h2></div></div></div>
+<section id="console" style="border:none;padding-top:10px"><div class="wrap">
+ <div class="mission" style="margin-bottom:28px"><h3>Votre mission</h3><ol>
+  <li>Choisissez un réflecteur, puis appuyez sur <b>TIR LASER</b>.</li>
+  <li>Écoutez : un premier bip au départ du tir, un second bip au retour de l'écho.</li>
+  <li>Relevez la <b>durée de l'aller-retour</b>. Faites au moins 3 tirs.</li>
+  <li>Proposez un protocole pour calculer la vitesse de la lumière à partir de vos mesures.</li></ol></div>
+ <div class="console">
+  <div class="panel ctrl"><h3>Paramètres du tir</h3>
+   <label for="grp">Équipe</label><input id="grp" value="Binôme 1" maxlength="24">
+   <label for="tgt">Cible</label><select id="tgt">
+    <option value="A15">Apollo 15 · 300 prismes</option><option value="A11">Apollo 11 · 100 prismes</option>
+    <option value="A14">Apollo 14 · 100 prismes</option><option value="L1">Lunokhod 1</option><option value="L2">Lunokhod 2</option></select>
+   <div class="sys"><div><span>Station</span><span>BOURAKÉ-NC</span></div>
+    <div><span>Laser</span><span id="sLaser" class="ok">PRÊT</span></div><div><span>Télescope</span><span id="sTel" class="ok">ALIGNÉ</span></div>
+    <div><span>Détecteur</span><span id="sDet" class="ok">EN ÉCOUTE</span></div><div><span>Horloge</span><span class="ok">SYNCHRO</span></div></div>
+   <button id="fire"><small>IMPULSION</small>TIR<br>LASER</button></div>
+  <div class="screens">
+   <div class="scope"><div class="scope-head"><span>OSCILLOSCOPE · DÉTECTEUR DE PHOTONS</span><span>0,5 s / DIV</span></div><canvas id="scopeCv"></canvas></div>
+   <div class="scope" style="border-color:var(--line);background:#030712"><div class="scope-head" style="color:var(--mute)"><span>TRAJET DE L'IMPULSION</span><span>échelle non respectée</span></div><canvas id="trajCv"></canvas></div>
+   <div class="readout"><div class="ro"><span>Durée aller-retour</span><div class="v" id="roT">0,0000 s</div></div>
+    <div class="ro"><span>État</span><div class="v small" id="roState">EN ATTENTE</div></div>
+    <div class="ro"><span>Photons retour</span><div class="v small" id="roPh">—</div></div></div>
+   <div class="panel"><div class="logbar"><h3 style="margin:0">Journal des tirs</h3><button class="btn-s" id="clear">Effacer</button></div>
+    <div class="log"><table><thead><tr><th>#</th><th>Équipe</th><th>Cible</th><th>Heure</th><th>Durée aller-retour</th></tr></thead>
+    <tbody id="logBody"><tr><td colspan="5" class="muted">Aucun tir pour l'instant.</td></tr></tbody></table></div></div>
+  </div></div>
+</div></section>
+</main>
+<footer><div class="wrap">
+<div><b class="mono" style="color:var(--txt)">ÉCHO-LUNE</b> · Réseau Pacifique de télémétrie laser<br>Programme éducatif · Collèges de Nouvelle-Calédonie</div>
+<div class="mono" style="font-size:11px">Photographies : NASA (domaine public), via Wikimedia Commons<br>Console pédagogique · données de tir simulées</div>
+</div></footer>
+<script src="common.js"></script><script src="console.js"></script>
+</body></html>
