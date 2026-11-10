@@ -47,11 +47,13 @@ function drawTraj(t){tx.clearRect(0,0,TW,TH);const ex=60,mx=TW-60,cy=TH/2;
   tx.font='11px JetBrains Mono';tx.fillStyle='#7f95b8';tx.textAlign='center';tx.fillText('TERRE · Bouraké',ex,cy+52);tx.fillText('LUNE · '+$('tgt').value,mx,cy+40);
   tx.strokeStyle='rgba(127,149,184,.25)';tx.setLineDash([3,6]);tx.beginPath();tx.moveTo(ex+34,cy);tx.lineTo(mx-17,cy);tx.stroke();tx.setLineDash([]);
   if(!shot)return;const tr=shot.tr,L=mx-17-(ex+34);
-  let p,col,up;
-  if(t<tr/2){p=t/(tr/2);col='#ff4d6d';up=-1}else if(t<tr){p=1-(t-tr/2)/(tr/2);col='#4dff9a';up=1}else return;
+  // même onde à l'aller et au retour : le réflecteur renvoie la lumière sans changer sa longueur d'onde
+  const col=shot.col||'#ff4d6d';let p,up;
+  if(t<tr/2){p=t/(tr/2);up=-1}else if(t<tr){p=1-(t-tr/2)/(tr/2);up=1}else return;
   const x=ex+34+p*L,y=cy+up*6;
-  tx.strokeStyle=col;tx.lineWidth=3;tx.shadowColor=col;tx.shadowBlur=14;tx.beginPath();
-  const tail=Math.min(60,L*.15);tx.moveTo(x,y);tx.lineTo(up<0?x-tail:x+tail,y);tx.stroke();tx.shadowBlur=0;
+  tx.strokeStyle=col;tx.lineWidth=3;tx.shadowColor=col;tx.shadowBlur=shot.vis===false?0:14;if(shot.vis===false)tx.setLineDash([6,4]);tx.beginPath();
+  const tail=Math.min(60,L*.15);tx.moveTo(x,y);tx.lineTo(up<0?x-tail:x+tail,y);tx.stroke();tx.shadowBlur=0;tx.setLineDash([]);
+  if(shot.vis===false){tx.font='10px JetBrains Mono';tx.fillStyle='#8d97aa';tx.textAlign='center';tx.fillText(shot.dom.toLowerCase()+' : invisible',x,y+up*14+(up>0?8:0))}
   tx.fillStyle='#fff';tx.beginPath();tx.arc(x,y,3,0,7);tx.fill()}
 
 function setSys(l,te,d){$('sLaser').textContent=l[0];$('sLaser').className=l[1];$('sTel').textContent=te[0];$('sTel').className=te[1];$('sDet').textContent=d[0];$('sDet').className=d[1]}
@@ -76,13 +78,14 @@ function fire(){const k=$('tgt').value;
   shot=null;trace=[];drawScope(0);drawTraj(0);
   setTimeout(()=>{$('roState').textContent='TIR !';setSys(['ÉMISSION','ok'],['VERROUILLÉ','ok'],['EN ÉCOUTE','wait']);
     beep(880,.18,.35);
-    shot={t0:performance.now(),tr,done:false,k,ph:2+Math.floor(Math.random()*6)};
+    const o=window.ONDE?ONDE.get():{lam:532,col:'#ff4d6d',vis:true,dom:'Lumière visible',nom:'vert'};
+    shot={t0:performance.now(),tr,done:false,k,ph:2+Math.floor(Math.random()*6),lam:o.lam,col:o.col,vis:o.vis,dom:o.dom,nom:o.nom};
     setTimeout(()=>{if(shot&&!shot.done)$('roState').textContent='ALLER…'},60);
     requestAnimationFrame(loop)},900)}
 
-function log(){shots.push({n:shots.length+1,g:$('grp').value||'—',k:shot.k,h:new Date().toLocaleTimeString('fr-FR'),t:shot.tr});renderLog()}
-function renderLog(){const b=$('logBody');if(!shots.length){b.innerHTML='<tr><td colspan="5" class="muted">Aucun tir pour l\'instant.</td></tr>';return}
-  b.innerHTML=shots.slice().reverse().map(s=>`<tr><td>${s.n}</td><td>${s.g.replace(/[<>&]/g,'')}</td><td>${s.k}</td><td>${s.h}</td><td class="t">${fmt(s.t)}</td></tr>`).join('')}
+function log(){shots.push({n:shots.length+1,g:$('grp').value||'—',k:shot.k,o:shot.lam.toLocaleString('fr-FR')+' nm · '+(shot.vis?shot.nom:shot.dom.toLowerCase()),c:shot.vis?shot.col:'#8d97aa',h:new Date().toLocaleTimeString('fr-FR'),t:shot.tr});renderLog()}
+function renderLog(){const b=$('logBody');if(!shots.length){b.innerHTML='<tr><td colspan="6" class="muted">Aucun tir pour l\'instant.</td></tr>';return}
+  b.innerHTML=shots.slice().reverse().map(s=>`<tr><td>${s.n}</td><td>${s.g.replace(/[<>&]/g,'')}</td><td>${s.k}</td><td style="color:${s.c}">${s.o}</td><td>${s.h}</td><td class="t">${fmt(s.t)}</td></tr>`).join('')}
 $('fire').addEventListener('click',fire);
 $('clear').addEventListener('click',()=>{shots=[];renderLog()});
 $('tgt').addEventListener('change',()=>{if(!shot||shot.done)drawTraj(shot?99:0)});

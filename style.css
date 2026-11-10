@@ -159,3 +159,24 @@ nav a.on{color:var(--cyan);border-bottom:2px solid var(--cyan);padding-bottom:4p
 @media(max-width:700px){.moon-tag{position:static;display:inline-block;margin:8px 4px}.moon-tag::before{display:none}.mt-b{transform:none}}
 .datatable td:first-child{color:var(--mute)}
 .datatable td:last-child{color:var(--cyan2);text-align:right}
+
+/* --- v3 : choisir l'onde envoyée --- */
+.wave{margin-bottom:28px}
+.wave-docs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px}
+@media(max-width:900px){.wave-docs{grid-template-columns:1fr}}
+.doc{background:#071021;border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:14.5px}
+.doc h4{font-family:Orbitron;font-weight:500;font-size:14px;color:var(--txt);margin:4px 0 6px}
+.doc-n{font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.16em;color:var(--amber);text-transform:uppercase}
+#fullCv{height:72px}
+#specCv{height:90px;cursor:pointer;touch-action:none}
+#sinCv{height:170px}
+.wave-ctrl{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+#lamRange{width:100%;accent-color:var(--cyan)}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.presets .btn-s.on{color:var(--bg);background:var(--cyan);border-color:var(--cyan)}
+.wave-read{display:grid;grid-template-columns:1fr 1.4fr;gap:16px;margin-top:14px}
+@media(max-width:700px){.wave-read{grid-template-columns:1fr}}
+.wave-read div{background:#040b18;border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.wave-read span{display:block;font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.16em;color:var(--mute);text-transform:uppercase}
+.wave-read b{font-family:"JetBrains Mono";font-weight:600;font-size:30px}
+.wave-read b.small{font-size:18px;color:var(--txt)}

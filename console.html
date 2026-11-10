@@ -12,10 +12,29 @@
 <div class="page-hero"><div class="wrap"><div class="sec-head"><span class="kicker">// Console de tir · Station de Bouraké · accès élève</span><h2>Envoyer une impulsion laser</h2></div></div></div>
 <section id="console" style="border:none;padding-top:10px"><div class="wrap">
  <div class="mission" style="margin-bottom:28px"><h3>Votre mission</h3><ol>
-  <li>Choisissez un réflecteur, puis appuyez sur <b>TIR LASER</b>.</li>
+  <li>Choisissez <b>l'onde à envoyer</b> sur la frise, puis un réflecteur, puis appuyez sur <b>TIR LASER</b>.</li>
   <li>Écoutez : un premier bip au départ du tir, un second bip au retour de l'écho.</li>
   <li>Relevez la <b>durée de l'aller-retour</b>. Faites au moins 3 tirs.</li>
-  <li>Proposez un protocole pour calculer la vitesse de la lumière à partir de vos mesures.</li></ol></div>
+  <li>Proposez un protocole pour calculer la vitesse de la lumière à partir de vos mesures.</li>
+  <li>Changez d'onde (infrarouge, rouge, vert, bleu, ultraviolet) et tirez de nouveau : <b>la durée change-t-elle ?</b></li></ol></div>
+ <div class="panel wave" id="wave">
+  <div class="logbar"><h3 style="margin:0">Choisir l'onde envoyée</h3><span class="mono muted" style="font-size:11px">LASER ACCORDABLE · 100 À 1 500 nm</span></div>
+  <div class="wave-docs">
+   <div class="doc"><span class="doc-n">Doc 1</span><h4>La lumière est une onde</h4><p>On la représente par une courbe qui ondule. La distance entre deux crêtes s'appelle la <b>longueur d'onde</b>, notée <b>λ</b> (lambda). Elle se mesure ici en nanomètres : 1 nm = 0,000 000 001 m.</p></div>
+   <div class="doc"><span class="doc-n">Doc 2</span><h4>Le spectre électromagnétique</h4><p>Ondes radio, micro-ondes, infrarouge, lumière visible, ultraviolet, rayons X : ce sont <b>toutes des ondes électromagnétiques</b>. Seule la longueur d'onde change. Notre œil ne voit qu'une petite partie : de 380 à 750 nm environ.</p></div>
+   <div class="doc"><span class="doc-n">Doc 3</span><h4>Et la vitesse ?</h4><p>Toutes ces ondes vont-elles à la même vitesse ? À vous de le vérifier : envoyez des ondes différentes vers la Lune et comparez les durées d'aller-retour. Les vraies stations utilisent un laser <b>vert (532 nm)</b> ou <b>infrarouge (1 064 nm)</b>.</p></div>
+  </div>
+  <div class="scope-head" style="color:var(--mute);margin-top:18px"><span>VUE D'ENSEMBLE · TOUT LE SPECTRE</span><span>échelle logarithmique</span></div>
+  <canvas id="fullCv"></canvas>
+  <div class="scope-head" style="color:var(--mute);margin-top:10px"><span>ZOOM · CLIQUEZ OU FAITES GLISSER POUR CHOISIR λ</span><span></span></div>
+  <canvas id="specCv"></canvas>
+  <div class="wave-ctrl">
+   <input type="range" id="lamRange" step="1" value="532" aria-label="Longueur d'onde en nanomètres">
+   <div class="presets"><button class="btn-s" data-lam="355">UV · 355 nm</button><button class="btn-s" data-lam="450">Bleu · 450 nm</button><button class="btn-s" data-lam="532">Vert · 532 nm</button><button class="btn-s" data-lam="650">Rouge · 650 nm</button><button class="btn-s" data-lam="1064">Infrarouge · 1 064 nm</button></div>
+  </div>
+  <div class="wave-read"><div><span>Longueur d'onde envoyée</span><b id="lamVal">532 nm</b></div><div><span>Type d'onde</span><b id="lamDom" class="small">—</b></div></div>
+  <div class="scope" style="border-color:var(--line);background:#030712;margin-top:14px"><div class="scope-head" style="color:var(--mute)"><span>L'ONDE ENVOYÉE</span><span>la courbe s'étire quand λ augmente</span></div><canvas id="sinCv"></canvas></div>
+ </div>
  <div class="console">
   <div class="panel ctrl"><h3>Paramètres du tir</h3>
    <label for="grp">Équipe</label><input id="grp" value="Binôme 1" maxlength="24">
@@ -33,8 +52,8 @@
     <div class="ro"><span>État</span><div class="v small" id="roState">EN ATTENTE</div></div>
     <div class="ro"><span>Photons retour</span><div class="v small" id="roPh">—</div></div></div>
    <div class="panel"><div class="logbar"><h3 style="margin:0">Journal des tirs</h3><button class="btn-s" id="clear">Effacer</button></div>
-    <div class="log"><table><thead><tr><th>#</th><th>Équipe</th><th>Cible</th><th>Heure</th><th>Durée aller-retour</th></tr></thead>
-    <tbody id="logBody"><tr><td colspan="5" class="muted">Aucun tir pour l'instant.</td></tr></tbody></table></div></div>
+    <div class="log"><table><thead><tr><th>#</th><th>Équipe</th><th>Cible</th><th>Onde</th><th>Heure</th><th>Durée aller-retour</th></tr></thead>
+    <tbody id="logBody"><tr><td colspan="6" class="muted">Aucun tir pour l'instant.</td></tr></tbody></table></div></div>
   </div></div>
 </div></section>
 </main>
@@ -42,5 +61,5 @@
 <div><b class="mono" style="color:var(--txt)">ÉCHO-LUNE</b> · Réseau Pacifique de télémétrie laser<br>Programme éducatif · Collèges de Nouvelle-Calédonie</div>
 <div class="mono" style="font-size:11px">Photographies : NASA (domaine public), via Wikimedia Commons<br>Console pédagogique · données de tir simulées</div>
 </div></footer>
-<script src="common.js"></script><script src="console.js"></script>
+<script src="common.js"></script><script src="onde.js"></script><script src="console.js"></script>
 </body></html>
