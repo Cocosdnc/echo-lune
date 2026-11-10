@@ -3,63 +3,66 @@
 <title>Console de tir · ÉCHO-LUNE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Exo+2:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"></head><body>
+<link rel="stylesheet" href="style.css"></head><body class="dash-page">
 <canvas id="stars"></canvas>
 <header class="topbar"><div class="wrap">
 <a class="brand" href="index.html"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#3fe0ff" stroke-width="1.5"/><circle cx="27" cy="13" r="5" fill="#d8e7ff"/><path d="M6 30 L27 13" stroke="#ff4d6d" stroke-width="1.6"/><path d="M27 13 L10 33" stroke="#4dff9a" stroke-width="1.2" stroke-dasharray="2 2"/><circle cx="20" cy="20" r="13" fill="none" stroke="#3fe0ff" stroke-width=".6" opacity=".5"/></svg><div><b>ÉCHO-LUNE</b><small>Réseau Pacifique de télémétrie laser</small></div></a>
 <nav><a href="index.html">Accueil</a><a href="lune.html">La Lune</a><a href="stations.html">Stations</a><a href="console.html" class=on>Console de tir</a></nav><div class="status-pill">LIAISON ACTIVE</div></div></header>
-<main>
-<div class="page-hero"><div class="wrap"><div class="sec-head"><span class="kicker">// Console de tir · Station de Bouraké · accès élève</span><h2>Envoyer une impulsion laser</h2></div></div></div>
-<section id="console" style="border:none;padding-top:10px"><div class="wrap">
- <div class="mission" style="margin-bottom:28px"><h3>Votre mission</h3><ol>
-  <li>Choisissez <b>l'onde à envoyer</b> sur la frise, puis un réflecteur, puis appuyez sur <b>TIR LASER</b>.</li>
-  <li>Écoutez : un premier bip au départ du tir, un second bip au retour de l'écho.</li>
-  <li>Relevez la <b>durée de l'aller-retour</b>. Faites au moins 3 tirs.</li>
-  <li>Proposez un protocole pour calculer la vitesse de la lumière à partir de vos mesures.</li>
-  <li>Changez d'onde (infrarouge, rouge, vert, bleu, ultraviolet) et tirez de nouveau : <b>la durée change-t-elle ?</b></li></ol></div>
- <div class="panel wave" id="wave">
-  <div class="logbar"><h3 style="margin:0">Choisir l'onde envoyée</h3><span class="mono muted" style="font-size:11px">LASER ACCORDABLE · 100 À 1 500 nm</span></div>
-  <div class="wave-docs">
-   <div class="doc"><span class="doc-n">Doc 1</span><h4>La lumière est une onde</h4><p>On la représente par une courbe qui ondule. La distance entre deux crêtes s'appelle la <b>longueur d'onde</b>, notée <b>λ</b> (lambda). Elle se mesure ici en nanomètres : 1 nm = 0,000 000 001 m.</p></div>
-   <div class="doc"><span class="doc-n">Doc 2</span><h4>Le spectre électromagnétique</h4><p>Ondes radio, micro-ondes, infrarouge, lumière visible, ultraviolet, rayons X : ce sont <b>toutes des ondes électromagnétiques</b>. Seule la longueur d'onde change. Notre œil ne voit qu'une petite partie : de 380 à 750 nm environ.</p></div>
-   <div class="doc"><span class="doc-n">Doc 3</span><h4>Et la vitesse ?</h4><p>Toutes ces ondes vont-elles à la même vitesse ? À vous de le vérifier : envoyez des ondes différentes vers la Lune et comparez les durées d'aller-retour. Les vraies stations utilisent un laser <b>vert (532 nm)</b> ou <b>infrarouge (1 064 nm)</b>.</p></div>
-  </div>
-  <div class="scope-head" style="color:var(--mute);margin-top:18px"><span>VUE D'ENSEMBLE · TOUT LE SPECTRE</span><span>échelle logarithmique</span></div>
-  <canvas id="fullCv"></canvas>
-  <div class="scope-head" style="color:var(--mute);margin-top:10px"><span>ZOOM · CLIQUEZ OU FAITES GLISSER POUR CHOISIR λ</span><span></span></div>
-  <canvas id="specCv"></canvas>
-  <div class="wave-ctrl">
-   <input type="range" id="lamRange" step="1" value="532" aria-label="Longueur d'onde en nanomètres">
-   <div class="presets"><button class="btn-s" data-lam="355">UV · 355 nm</button><button class="btn-s" data-lam="450">Bleu · 450 nm</button><button class="btn-s" data-lam="532">Vert · 532 nm</button><button class="btn-s" data-lam="650">Rouge · 650 nm</button><button class="btn-s" data-lam="1064">Infrarouge · 1 064 nm</button></div>
-  </div>
-  <div class="wave-read"><div><span>Longueur d'onde envoyée</span><b id="lamVal">532 nm</b></div><div><span>Type d'onde</span><b id="lamDom" class="small">—</b></div></div>
-  <div class="scope" style="border-color:var(--line);background:#030712;margin-top:14px"><div class="scope-head" style="color:var(--mute)"><span>L'ONDE ENVOYÉE</span><span>la courbe s'étire quand λ augmente</span></div><canvas id="sinCv"></canvas></div>
- </div>
- <div class="console">
-  <div class="panel ctrl"><h3>Paramètres du tir</h3>
-   <label for="grp">Équipe</label><input id="grp" value="Binôme 1" maxlength="24">
-   <label for="tgt">Cible</label><select id="tgt">
+<main class="dash">
+ <!-- colonne gauche : tir + mesures -->
+ <div class="dcol">
+  <div class="panel ctrl dpanel">
+   <h3>Paramètres du tir</h3>
+   <div class="row2"><div><label for="grp">Équipe</label><input id="grp" value="Binôme 1" maxlength="24"></div>
+   <div><label for="tgt">Cible</label><select id="tgt">
     <option value="A15">Apollo 15 · 300 prismes</option><option value="A11">Apollo 11 · 100 prismes</option>
-    <option value="A14">Apollo 14 · 100 prismes</option><option value="L1">Lunokhod 1</option><option value="L2">Lunokhod 2</option></select>
-   <div class="sys"><div><span>Station</span><span>BOURAKÉ-NC</span></div>
-    <div><span>Laser</span><span id="sLaser" class="ok">PRÊT</span></div><div><span>Télescope</span><span id="sTel" class="ok">ALIGNÉ</span></div>
+    <option value="A14">Apollo 14 · 100 prismes</option><option value="L1">Lunokhod 1</option><option value="L2">Lunokhod 2</option></select></div></div>
+   <div class="sys"><div><span>Laser</span><span id="sLaser" class="ok">PRÊT</span></div><div><span>Télescope</span><span id="sTel" class="ok">ALIGNÉ</span></div>
     <div><span>Détecteur</span><span id="sDet" class="ok">EN ÉCOUTE</span></div><div><span>Horloge</span><span class="ok">SYNCHRO</span></div></div>
-   <button id="fire"><small>IMPULSION</small>TIR<br>LASER</button></div>
-  <div class="screens">
-   <div class="scope"><div class="scope-head"><span>OSCILLOSCOPE · DÉTECTEUR DE PHOTONS</span><span>0,5 s / DIV</span></div><canvas id="scopeCv"></canvas></div>
-   <div class="scope" style="border-color:var(--line);background:#030712"><div class="scope-head" style="color:var(--mute)"><span>TRAJET DE L'IMPULSION</span><span>échelle non respectée</span></div><canvas id="trajCv"></canvas></div>
-   <div class="readout"><div class="ro"><span>Durée aller-retour</span><div class="v" id="roT">0,0000 s</div></div>
-    <div class="ro"><span>État</span><div class="v small" id="roState">EN ATTENTE</div></div>
-    <div class="ro"><span>Photons retour</span><div class="v small" id="roPh">—</div></div></div>
-   <div class="panel"><div class="logbar"><h3 style="margin:0">Journal des tirs</h3><button class="btn-s" id="clear">Effacer</button></div>
-    <div class="log"><table><thead><tr><th>#</th><th>Équipe</th><th>Cible</th><th>Onde</th><th>Heure</th><th>Durée aller-retour</th></tr></thead>
-    <tbody id="logBody"><tr><td colspan="6" class="muted">Aucun tir pour l'instant.</td></tr></tbody></table></div></div>
-  </div></div>
-</div></section>
+   <button id="fire"><small>IMPULSION</small>TIR<br>LASER</button>
+  </div>
+  <div class="readout dread">
+   <div class="ro"><span>Durée aller-retour</span><div class="v" id="roT">0,0000 s</div></div>
+   <div class="ro half"><span>État</span><div class="v small" id="roState">EN ATTENTE</div></div>
+   <div class="ro half"><span>Photons</span><div class="v small" id="roPh">—</div></div>
+  </div>
+ </div>
+
+ <!-- colonne centrale : onde + écrans -->
+ <div class="dcol">
+  <div class="panel wave dpanel" id="wave">
+   <div class="wave-top">
+    <div class="wave-read"><div><span>Onde envoyée</span><b id="lamVal">532 nm</b></div><div><span>Type d'onde</span><b id="lamDom" class="small">—</b></div></div>
+    <div class="presets"><button class="btn-s" data-lam="355">UV · 355</button><button class="btn-s" data-lam="450">Bleu · 450</button><button class="btn-s" data-lam="532">Vert · 532</button><button class="btn-s" data-lam="650">Rouge · 650</button><button class="btn-s" data-lam="1064">IR · 1 064</button></div>
+   </div>
+   <canvas id="specCv" title="Cliquez ou faites glisser pour choisir la longueur d'onde"></canvas>
+   <input type="range" id="lamRange" step="1" value="532" aria-label="Longueur d'onde en nanomètres">
+   <canvas id="sinCv"></canvas>
+   <div class="cap">λ (lambda) : longueur d'onde = distance entre deux crêtes · schéma, pas à l'échelle</div>
+  </div>
+  <div class="scope dscope"><div class="scope-head"><span>OSCILLOSCOPE · DÉTECTEUR DE PHOTONS</span><span>0,5 s / DIV</span></div><canvas id="scopeCv"></canvas></div>
+  <div class="scope dtraj"><div class="scope-head" style="color:var(--mute)"><span>TRAJET DE L'IMPULSION</span><span>échelle non respectée</span></div><canvas id="trajCv"></canvas></div>
+ </div>
+
+ <!-- colonne droite : mission, documents, journal -->
+ <div class="dcol">
+  <div class="panel dpanel dinfo">
+   <div class="tabs"><button class="tab on" data-tab="t-mis">Mission</button><button class="tab" data-tab="t-d1">Doc 1</button><button class="tab" data-tab="t-d2">Doc 2</button><button class="tab" data-tab="t-d3">Doc 3</button></div>
+   <div class="tabc on" id="t-mis"><ol>
+    <li>Choisissez <b>l'onde à envoyer</b>, puis la cible, puis <b>TIR LASER</b>.</li>
+    <li>Un bip au départ, un bip au retour de l'écho.</li>
+    <li>Relevez la <b>durée de l'aller-retour</b>. Faites 3 tirs.</li>
+    <li>Calculez la vitesse de la lumière (distance Terre–Lune : page <a href="lune.html">La Lune</a>).</li>
+    <li>Changez d'onde et tirez de nouveau : <b>la durée change-t-elle ?</b></li></ol></div>
+   <div class="tabc" id="t-d1"><h4>La lumière est une onde</h4><p>On la représente par une courbe qui ondule. La distance entre deux crêtes s'appelle la <b>longueur d'onde</b>, notée <b>λ</b> (lambda). Elle se mesure ici en nanomètres : 1 nm = 0,000 000 001 m.</p></div>
+   <div class="tabc" id="t-d2"><h4>Le spectre électromagnétique</h4><p>Radio, micro-ondes, infrarouge, visible, ultraviolet, rayons X : <b>toutes des ondes électromagnétiques</b>. Seule λ change. Notre œil ne voit que de 380 à 750 nm environ.</p><canvas id="fullCv"></canvas></div>
+   <div class="tabc" id="t-d3"><h4>Et la vitesse ?</h4><p>Toutes ces ondes vont-elles à la même vitesse ? À vous de le vérifier : envoyez des ondes différentes vers la Lune et comparez les durées d'aller-retour. Les vraies stations utilisent un laser <b>vert (532 nm)</b> ou <b>infrarouge (1 064 nm)</b>.</p></div>
+  </div>
+  <div class="panel dpanel dlog"><div class="logbar"><h3 style="margin:0">Journal des tirs</h3><button class="btn-s" id="clear">Effacer</button></div>
+   <div class="log"><table><thead><tr><th>#</th><th>Équipe</th><th>Cible</th><th>Onde</th><th>Heure</th><th>Durée</th></tr></thead>
+   <tbody id="logBody"><tr><td colspan="6" class="muted">Aucun tir pour l'instant.</td></tr></tbody></table></div></div>
+ </div>
 </main>
-<footer><div class="wrap">
-<div><b class="mono" style="color:var(--txt)">ÉCHO-LUNE</b> · Réseau Pacifique de télémétrie laser<br>Programme éducatif · Collèges de Nouvelle-Calédonie</div>
-<div class="mono" style="font-size:11px">Photographies : NASA (domaine public), via Wikimedia Commons<br>Console pédagogique · données de tir simulées</div>
-</div></footer>
 <script src="common.js"></script><script src="onde.js"></script><script src="console.js"></script>
+<script>document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.tabc').forEach(e=>e.classList.remove('on'));b.classList.add('on');document.getElementById(b.dataset.tab).classList.add('on');dispatchEvent(new Event('resize'))});</script>
 </body></html>

@@ -59,7 +59,7 @@ function drawFull(){const {c,w,h}=F;c.clearRect(0,0,w,h);const y=18,bh=26;
 const PAD=14;
 const xOf=(l,w)=>PAD+(l-LMIN)/(LMAX-LMIN)*(w-2*PAD);
 const lOf=(x,w)=>Math.round(Math.max(LMIN,Math.min(LMAX,LMIN+(x-PAD)/(w-2*PAD)*(LMAX-LMIN))));
-function drawSpec(){const {c,w,h}=S;c.clearRect(0,0,w,h);const y=22,bh=34;
+function drawSpec(){const {c,w,h}=S;c.clearRect(0,0,w,h);const y=18,bh=Math.max(18,Math.min(34,h-44));
   // UV et IR : gris hachuré
   [[LMIN,VIS0],[VIS1,LMAX]].forEach(([a,b])=>{const x0=xOf(a,w),x1=xOf(b,w);c.fillStyle='#2a3242';c.fillRect(x0,y,x1-x0,bh);
     c.save();c.beginPath();c.rect(x0,y,x1-x0,bh);c.clip();c.strokeStyle='rgba(141,151,170,.35)';c.lineWidth=1;
@@ -71,7 +71,7 @@ function drawSpec(){const {c,w,h}=S;c.clearRect(0,0,w,h);const y=22,bh=34;
   // graduations
   c.font='10.5px "JetBrains Mono",monospace';c.fillStyle='#7f95b8';c.strokeStyle='#7f95b8';
   for(let l=100;l<=1500;l+=100){const x=xOf(l,w);c.beginPath();c.moveTo(x,y+bh);c.lineTo(x,y+bh+5);c.stroke();if(l%200===100||l===1500)c.fillText(l,x,y+bh+17)}
-  c.textAlign='right';c.fillText('λ (nm)',w-2,y+bh+30);
+  c.textAlign='right';c.fillText('λ (nm)',w-2,y-7);
   // curseur
   const x=xOf(lam,w),I=info(lam);
   c.fillStyle='#fff';c.beginPath();c.moveTo(x,y+bh+1);c.lineTo(x-7,y+bh+11);c.lineTo(x+7,y+bh+11);c.closePath();c.fill();
@@ -98,7 +98,7 @@ function drawSin(){const {c,w,h}=N;c.clearRect(0,0,w,h);
   shown+=(lam-shown)*.12;                           // s'étire / se contracte en douceur
   const col=info(lam).vis?info(Math.round(shown)).col:GREY;
   const k=(w-40)/(LMAX*2.2);                        // px par nm : ≥ 2 périodes à 1 500 nm
-  const P=shown*k, A=h*.26, cy=h*.46, x0=20, x1=w-20;
+  const A=Math.min(h*.24,60), cy=Math.max(h*.5,A+34), P=shown*k, x0=20, x1=w-20;
   // axe
   c.strokeStyle='rgba(127,149,184,.35)';c.lineWidth=1;c.beginPath();c.moveTo(x0,cy);c.lineTo(x1,cy);c.stroke();
   // onde
@@ -115,11 +115,11 @@ function drawSin(){const {c,w,h}=N;c.clearRect(0,0,w,h);
     [[xc,1],[xc+P,-1]].forEach(([x,s])=>{c.beginPath();c.moveTo(x,yt);c.lineTo(x+7*s,yt-4);c.lineTo(x+7*s,yt+4);c.closePath();c.fill()});
     c.font='600 13px "JetBrains Mono",monospace';c.textAlign='center';c.fillText('λ = '+nf(lam)+' nm',xc+P/2,yt-9);}
   // légende
-  c.textAlign='left';c.font='12px "JetBrains Mono",monospace';c.fillStyle='#7f95b8';
-  c.fillText('λ : longueur d\'onde = distance entre deux crêtes · schéma, pas à l\'échelle',x0,h-8);
+  if(h>=150){c.textAlign='left';c.font='12px "JetBrains Mono",monospace';c.fillStyle='#7f95b8';
+  c.fillText('λ : longueur d\'onde = distance entre deux crêtes · schéma, pas à l\'échelle',x0,h-8);}
   phase+=.06; requestAnimationFrame(drawSin);
 }
 
-addEventListener('resize',resize);resize();set(532);requestAnimationFrame(drawSin);
+addEventListener('resize',resize);if(window.ResizeObserver)new ResizeObserver(()=>resize()).observe(document.body);resize();set(532);requestAnimationFrame(drawSin);
 window.ONDE={get};
 })();

@@ -9,7 +9,7 @@ let shot=null,shots=[],actx=null;
 function fit(cv){const r=cv.getBoundingClientRect(),d=devicePixelRatio||1;cv.width=r.width*d;cv.height=r.height*d;cv.getContext('2d').setTransform(d,0,0,d,0,0);return r}
 let SW,SH,TW,TH;
 function resize(){const a=fit(scope);SW=a.width;SH=a.height;const b=fit(traj);TW=b.width;TH=b.height;drawScope(shot?elapsed():0);drawTraj(shot?elapsed():0)}
-addEventListener('resize',resize);
+addEventListener('resize',resize);if(window.ResizeObserver)new ResizeObserver(()=>resize()).observe(document.body);
 
 function beep(f,dur,vol){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(vol,actx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+dur);o.connect(g).connect(actx.destination);o.start();o.stop(actx.currentTime+dur)}catch(e){}}
 
@@ -38,19 +38,19 @@ function drawScope(t){grid();if(!trace.length)return;
     sx.fillStyle='#ffb547';sx.font='600 12px JetBrains Mono';const lab='ÉCHO  '+fmt(shot.tr);sx.fillText(lab,Math.min(x+8,SW-150),18);
     sx.fillStyle='#ff4d6d';sx.fillText('ÉMISSION',8,18)}}
 
-function drawTraj(t){tx.clearRect(0,0,TW,TH);const ex=60,mx=TW-60,cy=TH/2;
+function drawTraj(t){tx.clearRect(0,0,TW,TH);const R=Math.max(12,Math.min(32,TH*.26)),ex=R+28,mx=TW-40,cy=TH*.42,q=R/32;
   // Terre
-  const g=tx.createRadialGradient(ex-10,cy-10,4,ex,cy,34);g.addColorStop(0,'#7fd0ff');g.addColorStop(.6,'#1f6fb5');g.addColorStop(1,'#0a2a55');
-  tx.fillStyle=g;tx.beginPath();tx.arc(ex,cy,32,0,7);tx.fill();tx.fillStyle='rgba(60,170,90,.8)';tx.beginPath();tx.ellipse(ex-6,cy-6,12,8,.5,0,7);tx.fill();tx.beginPath();tx.ellipse(ex+12,cy+10,7,10,-.3,0,7);tx.fill();
+  const g=tx.createRadialGradient(ex-10*q,cy-10*q,4*q,ex,cy,34*q);g.addColorStop(0,'#7fd0ff');g.addColorStop(.6,'#1f6fb5');g.addColorStop(1,'#0a2a55');
+  tx.fillStyle=g;tx.beginPath();tx.arc(ex,cy,R,0,7);tx.fill();tx.fillStyle='rgba(60,170,90,.8)';tx.beginPath();tx.ellipse(ex-6*q,cy-6*q,12*q,8*q,.5,0,7);tx.fill();tx.beginPath();tx.ellipse(ex+12*q,cy+10*q,7*q,10*q,-.3,0,7);tx.fill();
   // Lune
-  const m=tx.createRadialGradient(mx-5,cy-5,2,mx,cy,16);m.addColorStop(0,'#f0f3f8');m.addColorStop(1,'#7b8496');tx.fillStyle=m;tx.beginPath();tx.arc(mx,cy,15,0,7);tx.fill();
-  tx.font='11px JetBrains Mono';tx.fillStyle='#7f95b8';tx.textAlign='center';tx.fillText('TERRE · Bouraké',ex,cy+52);tx.fillText('LUNE · '+$('tgt').value,mx,cy+40);
-  tx.strokeStyle='rgba(127,149,184,.25)';tx.setLineDash([3,6]);tx.beginPath();tx.moveTo(ex+34,cy);tx.lineTo(mx-17,cy);tx.stroke();tx.setLineDash([]);
-  if(!shot)return;const tr=shot.tr,L=mx-17-(ex+34);
+  const mr=Math.max(7,15*q),m=tx.createRadialGradient(mx-5*q,cy-5*q,2,mx,cy,mr+1);m.addColorStop(0,'#f0f3f8');m.addColorStop(1,'#7b8496');tx.fillStyle=m;tx.beginPath();tx.arc(mx,cy,mr,0,7);tx.fill();
+  tx.font='11px JetBrains Mono';tx.fillStyle='#7f95b8';tx.textAlign='center';tx.fillText('TERRE · Bouraké',Math.max(ex,48),cy+R+14);tx.fillText('LUNE · '+$('tgt').value,mx-8,cy+R+14);
+  tx.strokeStyle='rgba(127,149,184,.25)';tx.setLineDash([3,6]);tx.beginPath();tx.moveTo(ex+R+2,cy);tx.lineTo(mx-mr-2,cy);tx.stroke();tx.setLineDash([]);
+  if(!shot)return;const tr=shot.tr,L=mx-mr-2-(ex+R+2);
   // même onde à l'aller et au retour : le réflecteur renvoie la lumière sans changer sa longueur d'onde
   const col=shot.col||'#ff4d6d';let p,up;
   if(t<tr/2){p=t/(tr/2);up=-1}else if(t<tr){p=1-(t-tr/2)/(tr/2);up=1}else return;
-  const x=ex+34+p*L,y=cy+up*6;
+  const x=ex+R+2+p*L,y=cy+up*6;
   tx.strokeStyle=col;tx.lineWidth=3;tx.shadowColor=col;tx.shadowBlur=shot.vis===false?0:14;if(shot.vis===false)tx.setLineDash([6,4]);tx.beginPath();
   const tail=Math.min(60,L*.15);tx.moveTo(x,y);tx.lineTo(up<0?x-tail:x+tail,y);tx.stroke();tx.shadowBlur=0;tx.setLineDash([]);
   if(shot.vis===false){tx.font='10px JetBrains Mono';tx.fillStyle='#8d97aa';tx.textAlign='center';tx.fillText(shot.dom.toLowerCase()+' : invisible',x,y+up*14+(up>0?8:0))}
@@ -83,9 +83,9 @@ function fire(){const k=$('tgt').value;
     setTimeout(()=>{if(shot&&!shot.done)$('roState').textContent='ALLER…'},60);
     requestAnimationFrame(loop)},900)}
 
-function log(){shots.push({n:shots.length+1,g:$('grp').value||'—',k:shot.k,o:shot.lam.toLocaleString('fr-FR')+' nm · '+(shot.vis?shot.nom:shot.dom.toLowerCase()),c:shot.vis?shot.col:'#8d97aa',h:new Date().toLocaleTimeString('fr-FR'),t:shot.tr});renderLog()}
+function log(){shots.push({n:shots.length+1,g:$('grp').value||'—',k:shot.k,o:shot.lam.toLocaleString('fr-FR')+' nm',on:shot.vis?shot.nom:shot.dom.toLowerCase(),c:shot.vis?shot.col:'#8d97aa',h:new Date().toLocaleTimeString('fr-FR'),t:shot.tr});renderLog()}
 function renderLog(){const b=$('logBody');if(!shots.length){b.innerHTML='<tr><td colspan="6" class="muted">Aucun tir pour l\'instant.</td></tr>';return}
-  b.innerHTML=shots.slice().reverse().map(s=>`<tr><td>${s.n}</td><td>${s.g.replace(/[<>&]/g,'')}</td><td>${s.k}</td><td style="color:${s.c}">${s.o}</td><td>${s.h}</td><td class="t">${fmt(s.t)}</td></tr>`).join('')}
+  b.innerHTML=shots.slice().reverse().map(s=>`<tr><td>${s.n}</td><td>${s.g.replace(/[<>&]/g,'')}</td><td>${s.k}</td><td style="color:${s.c};white-space:nowrap" title="${s.on}">${s.o}</td><td>${s.h}</td><td class="t">${fmt(s.t)}</td></tr>`).join('')}
 $('fire').addEventListener('click',fire);
 $('clear').addEventListener('click',()=>{shots=[];renderLog()});
 $('tgt').addEventListener('change',()=>{if(!shot||shot.done)drawTraj(shot?99:0)});

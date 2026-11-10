@@ -180,3 +180,92 @@ nav a.on{color:var(--cyan);border-bottom:2px solid var(--cyan);padding-bottom:4p
 .wave-read span{display:block;font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.16em;color:var(--mute);text-transform:uppercase}
 .wave-read b{font-family:"JetBrains Mono";font-weight:600;font-size:30px}
 .wave-read b.small{font-size:18px;color:var(--txt)}
+
+/* --- v4 : tout plus compact, recentré --- */
+body{font-size:15px}
+.wrap{max-width:1100px;padding:0 20px}
+.topbar .wrap{height:52px}
+.brand svg{width:32px;height:32px}.brand b{font-size:15px}.brand small{font-size:9px}
+nav{gap:20px}nav a{font-size:11.5px}
+.status-pill{font-size:10px;padding:4px 10px}
+.hero{padding:40px 0 30px}
+h1{font-size:clamp(28px,3.8vw,46px);margin:12px 0 14px}
+.lead{font-size:16px}
+.access{margin-top:20px;padding:12px 18px}
+.cta{margin-top:18px;padding:11px 20px;font-size:12px}
+section{padding:40px 0}
+.sec-head{margin-bottom:22px}
+h2{font-size:clamp(20px,2.4vw,28px)}
+h3{font-size:14px}
+.panel{padding:18px}
+.page-hero{padding:30px 0 10px}
+.hero-photo{min-height:0}
+.ph-tall{aspect-ratio:4/3}
+.hero-grid{gap:28px}
+.timeline .tl{margin-bottom:18px}
+.next{margin-top:22px}
+.moon-wrap{max-width:min(400px,58vh)}
+.moon-tag b{font-size:16px}
+footer{padding:22px 0 26px}
+
+/* --- console : un seul écran, sans défilement --- */
+.dash-page{height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.dash-page::after{opacity:.1}
+.dash-page footer{display:none}
+.dash{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(230px,270px) minmax(0,1fr) minmax(250px,300px);gap:12px;
+  padding:12px;max-width:1500px;width:100%;margin:0 auto}
+.dcol{display:flex;flex-direction:column;gap:12px;min-height:0;min-width:0}
+.dpanel{padding:12px 14px}
+.dash h3{font-size:12.5px;margin-bottom:4px}
+.dash .ctrl label{margin:8px 0 4px;font-size:10px}
+.dash .ctrl select,.dash .ctrl input{padding:6px 8px;font-size:12px}
+.row2{display:grid;grid-template-columns:1fr;gap:0}
+.dash .sys{font-size:10.5px;margin-top:8px;padding-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+.dash .sys div{padding:0;display:flex;flex-direction:column}
+.dash .sys div span:first-child{color:var(--mute);font-size:9.5px}
+.dash #fire{width:min(110px,13vh);max-width:none;margin-top:10px;font-size:13px;box-shadow:0 0 0 6px rgba(255,77,109,.12),0 0 30px rgba(255,77,109,.45),inset 0 -8px 16px rgba(0,0,0,.4)}
+.dash #fire small{font-size:9px}
+.dread{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dread .ro{padding:8px 12px}.dread .ro:first-child{grid-column:1/-1}
+.dash .ro span{font-size:9.5px}
+.dash .ro .v{font-size:clamp(22px,3.6vh,32px)}
+.dash .ro .v.small{font-size:13px;margin-top:4px}
+.dash .wave{margin:0;display:flex;flex-direction:column;gap:6px;flex:0 0 auto}
+.wave-top{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.dash .wave-read{display:flex;gap:10px;margin:0}
+.dash .wave-read div{padding:5px 10px}
+.dash .wave-read span{font-size:9.5px}
+.dash .wave-read b{font-size:20px}.dash .wave-read b.small{font-size:13px}
+.dash .presets{gap:5px;margin-left:auto}
+.dash .presets .btn-s{padding:4px 8px;font-size:10.5px}
+.dash #specCv{height:clamp(54px,8vh,70px)}
+.dash #sinCv{height:clamp(70px,13vh,120px)}
+.dash #lamRange{margin:0}
+.dash .scope{padding:8px 10px;display:flex;flex-direction:column;min-height:0}
+.dash .scope-head{font-size:10px;margin-bottom:4px}
+.dscope{flex:1 1 0}
+.dash #scopeCv{flex:1 1 0;min-height:60px;height:auto}
+.dtraj{flex:0 0 auto;border-color:var(--line);background:#030712}
+.dash #trajCv{height:clamp(64px,11vh,110px)}
+.dinfo{flex:0 0 auto;max-height:46%;display:flex;flex-direction:column;overflow:hidden}
+.tabs{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.tab{background:transparent;border:1px solid var(--line);color:var(--mute);font-family:"JetBrains Mono";font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer}
+.tab.on{background:var(--cyan);color:var(--bg);border-color:var(--cyan)}
+.tabc{display:none;font-size:12.5px;line-height:1.45;overflow:auto;min-height:0}
+.tabc.on{display:block;flex:1 1 auto}
+.tabc h4{font-family:Orbitron;font-weight:500;font-size:12.5px;color:var(--amber);margin-bottom:4px}
+.tabc ol{margin-left:18px}.tabc li{margin:2px 0}
+.dash #fullCv{height:72px;margin-top:8px}
+.dlog{flex:1 1 0;min-height:0;display:flex;flex-direction:column}
+.dlog .log{max-height:none;flex:1 1 0;min-height:0;overflow:auto}
+.dash table{font-size:11.5px}.dash th,.dash td{padding:5px 6px}.dash th{font-size:9.5px}
+/* écran étroit : on revient à une page qui défile */
+@media(max-width:1000px),(max-height:520px){
+  .dash-page{height:auto;overflow:visible;display:block}
+  .dash{display:flex;flex-direction:column}
+  .dscope{flex:none}.dash #scopeCv{flex:none;height:220px}
+  .dinfo{max-height:none}.dlog{flex:none}.dlog .log{max-height:260px}
+}
+
+.dash .cap{font-family:"JetBrains Mono";font-size:10.5px;color:var(--mute)}
+@media(max-height:700px){.dash .ctrl label{margin:5px 0 3px}.dash h3{margin-bottom:0}.dread{gap:8px}.dread .ro{padding:6px 10px}.dash .dpanel{padding:10px 12px}.dash,.dcol{gap:10px}}
