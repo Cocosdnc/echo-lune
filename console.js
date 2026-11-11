@@ -48,7 +48,7 @@ function drawTraj(t){tx.clearRect(0,0,TW,TH);const R=Math.max(12,Math.min(32,TH*
   tx.strokeStyle='rgba(127,149,184,.25)';tx.setLineDash([3,6]);tx.beginPath();tx.moveTo(ex+R+2,cy);tx.lineTo(mx-mr-2,cy);tx.stroke();tx.setLineDash([]);
   if(!shot)return;const tr=shot.tr,L=mx-mr-2-(ex+R+2);
   // même onde à l'aller et au retour : le réflecteur renvoie la lumière sans changer sa longueur d'onde
-  const col=shot.col||'#ff4d6d';let p,up;
+  const col=shot.vis===false?'rgba(141,151,170,.45)':(shot.col||'#ff4d6d');let p,up;
   if(t<tr/2){p=t/(tr/2);up=-1}else if(t<tr){p=1-(t-tr/2)/(tr/2);up=1}else return;
   const x=ex+R+2+p*L,y=cy+up*6;
   tx.strokeStyle=col;tx.lineWidth=3;tx.shadowColor=col;tx.shadowBlur=shot.vis===false?0:14;if(shot.vis===false)tx.setLineDash([6,4]);tx.beginPath();

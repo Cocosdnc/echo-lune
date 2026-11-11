@@ -7,71 +7,59 @@
 <canvas id="stars"></canvas>
 <header class="topbar"><div class="wrap">
 <a class="brand" href="index.html"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#3fe0ff" stroke-width="1.5"/><circle cx="27" cy="13" r="5" fill="#d8e7ff"/><path d="M6 30 L27 13" stroke="#ff4d6d" stroke-width="1.6"/><path d="M27 13 L10 33" stroke="#4dff9a" stroke-width="1.2" stroke-dasharray="2 2"/><circle cx="20" cy="20" r="13" fill="none" stroke="#3fe0ff" stroke-width=".6" opacity=".5"/></svg><div><b>ÉCHO-LUNE</b><small>Réseau Pacifique de télémétrie laser</small></div></a>
-<nav><a href="index.html" class=on>Accueil</a><a href="lune.html">La Lune</a><a href="stations.html">Stations</a><a href="console.html">Console de tir</a></nav><div class="status-pill">LIAISON ACTIVE</div></div></header>
+<nav><a href="index.html" class=on>Accueil</a><a href="histoire.html">Histoire</a><a href="lune.html">La Lune</a><a href="stations.html">Stations</a></nav><div class="status-pill">LIAISON ACTIVE</div></div></header>
 <main>
-<div class="hero"><div class="wrap hero-grid">
- <div>
+<div class="hero home-hero"><div class="wrap">
+ <div class="hero-text">
   <div class="kicker">// Programme éducatif · Session 2026</div>
   <h1>Visez la Lune.<br><span>Écoutez son écho.</span></h1>
-  <p class="lead">Depuis 1969, des miroirs déposés par les astronautes attendent sur la Lune. Votre classe reçoit un accès à la console de tir de la station de Bouraké, en Nouvelle-Calédonie.</p>
+  <p class="lead">Depuis 1969, des miroirs déposés par les astronautes attendent sur la Lune. Votre classe reçoit un accès à la station de Bouraké, en Nouvelle-Calédonie.</p>
   <div class="access"><div class="ico">◈</div><p><b>Accès spécial accordé</b> · Établissement scolaire<br><span class="muted mono" style="font-size:12px">Autorisation n° EL-NC-0472 · Fenêtre de tir : ouverte</span></p></div>
-  <div><a class="cta ghost" href="#histoire">Découvrir la mission ↓</a></div>
  </div>
- <figure><div class="photo ph-tall hero-photo" ><img src="https://commons.wikimedia.org/wiki/Special:FilePath/AS11-40-5944_(22078724161).jpg?width=1400" alt="APOLLO 11 · 20.07.1969 · AS11-40-5944" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">APOLLO 11 · 20.07.1969 · AS11-40-5944</div></div>
- <figcaption>Buzz Aldrin installe les expériences scientifiques d'Apollo 11, dont le premier réflecteur laser.</figcaption></figure>
+ <div class="scene"><canvas id="sceneCv" aria-label="Animation : une station sur Terre envoie une impulsion laser vers la Lune, qui revient"></canvas>
+  <div class="scene-cap mono">Animation · échelle non respectée</div></div>
 </div></div>
 
-<section id="histoire"><div class="wrap">
- <div class="sec-head"><span class="kicker">// 01 · Histoire</span><h2>Des miroirs laissés sur la Lune</h2></div>
+<section id="technologie"><div class="wrap">
+ <div class="sec-head"><span class="kicker">// Technologie</span><h2>Comment ça marche ?</h2></div>
+ <p class="lead" style="max-width:760px;margin-bottom:28px">Deux éléments travaillent ensemble : une <b>station émettrice</b> sur la Terre envoie une impulsion de lumière, et un <b>réflecteur</b> posé sur la Lune la renvoie vers la station.</p>
+
+ <h3 class="tech-h"><span>1</span> La station émettrice sur la Terre</h3>
  <div class="grid2">
-  <div class="timeline">
-   <div class="tl"><div class="date">21 JUILLET 1969</div><h4>Apollo 11</h4><p>Quelques heures après les premiers pas de Neil Armstrong, Buzz Aldrin pose sur le sol lunaire un panneau de 100 petits prismes de verre : le tout premier réflecteur laser.</p></div>
-   <div class="tl"><div class="date">NOVEMBRE 1970</div><h4>Lunokhod 1</h4><p>Le robot soviétique Lunokhod 1 se pose sur la Lune. Il transporte un réflecteur… fabriqué en France.</p></div>
-   <div class="tl"><div class="date">FÉVRIER 1971</div><h4>Apollo 14</h4><p>Alan Shepard et Edgar Mitchell déposent un deuxième réflecteur de 100 prismes.</p></div>
-   <div class="tl"><div class="date">JUILLET 1971</div><h4>Apollo 15</h4><p>David Scott installe le plus grand réflecteur : 300 prismes. C'est aujourd'hui la cible principale des stations laser.</p></div>
-   <div class="tl"><div class="date">JANVIER 1973</div><h4>Lunokhod 2</h4><p>Second robot soviétique, lui aussi équipé d'un réflecteur de fabrication française.</p></div>
-  </div>
+  <div class="photo ph-wide"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Goddard_Spaceflight_Center_Laser_Ranging_Facility.jpg?width=1600" alt="STATION LASER · TIR EN COURS" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">STATION LASER · TIR EN COURS</div></div>
   <div class="panel">
-   <h3>Pourquoi envoyer de la lumière sur la Lune ?</h3>
-   <p>Une impulsion laser part de la Terre, file jusqu'à la Lune, frappe le réflecteur et revient exactement vers la station qui l'a envoyée. Les scientifiques mesurent très précisément <b>la durée de l'aller-retour</b>.</p>
-   <p>Ces mesures, répétées depuis plus de 50 ans, ont par exemple montré que la Lune s'éloigne de la Terre d'environ <b>3,8 cm par an</b>.</p>
-   <p class="muted" style="margin-top:18px">Ce sont les seules expériences des missions Apollo qui fonctionnent encore aujourd'hui : les réflecteurs n'ont besoin ni d'électricité, ni d'entretien.</p>
-   <div class="grid2" style="margin-top:24px;gap:14px">
-    <div><div class="stat">5</div><div class="muted mono" style="font-size:12px">réflecteurs encore utilisés</div></div>
-    <div><div class="stat">1969</div><div class="muted mono" style="font-size:12px">premier réflecteur posé</div></div>
-   </div>
+   <p>Une station de télémétrie laser est un grand télescope relié à un laser très puissant. Le télescope vise un réflecteur sur la Lune et envoie une impulsion de lumière extrêmement courte.</p>
+   <p>Un détecteur très sensible guette ensuite le retour de cette lumière. Une horloge atomique mesure la <b>durée de l'aller-retour</b> avec une précision incroyable.</p>
+   <p class="muted">Quelques stations dans le monde savent faire ce tir : en France, aux États-Unis… et une station est ouverte à votre classe en Nouvelle-Calédonie.</p>
+   <a class="cta ghost" href="stations.html">Voir les stations →</a>
   </div>
  </div>
-</div></section>
 
-<section id="reflecteur"><div class="wrap">
- <div class="sec-head"><span class="kicker">// 02 · Technologie</span><h2>Le réflecteur « coin de cube »</h2></div>
+ <h3 class="tech-h" style="margin-top:46px"><span>2</span> Le réflecteur sur la Lune</h3>
  <div class="grid2">
-  <figure><div class="photo ph-tall" ><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Apollo_11_Lunar_Laser_Ranging_Experiment.jpg?width=1200" alt="LRRR · APOLLO 11 · MER DE LA TRANQUILLITÉ" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">LRRR · APOLLO 11 · MER DE LA TRANQUILLITÉ</div></div>
+  <figure><div class="photo ph-tall"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Apollo_11_Lunar_Laser_Ranging_Experiment.jpg?width=1200" alt="LRRR · APOLLO 11 · MER DE LA TRANQUILLITÉ" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">LRRR · APOLLO 11 · MER DE LA TRANQUILLITÉ</div></div>
   <figcaption>Le réflecteur d'Apollo 11 sur le sol lunaire : 100 prismes de verre tournés vers la Terre.</figcaption></figure>
   <div>
-   <div class="panel"><h3>Un miroir qui renvoie la lumière d'où elle vient</h3>
-    <p>Chaque prisme est un « coin de cube » : trois faces réfléchissantes perpendiculaires, comme le coin d'une pièce. La lumière rebondit sur les trois faces et repart <b>dans la direction exacte d'où elle est arrivée</b>.</p>
+   <div class="panel"><h3>Le « coin de cube » : un miroir qui renvoie la lumière d'où elle vient</h3>
+    <p>Chaque prisme a trois faces réfléchissantes perpendiculaires, comme le coin d'une pièce. La lumière rebondit sur les trois faces et repart <b>dans la direction exacte d'où elle est arrivée</b>.</p>
     <p>Avec un miroir plat, il faudrait viser parfaitement droit. Avec un coin de cube, l'angle n'a presque pas d'importance. C'est le même principe que les catadioptres de vélo !</p></div>
-   <div class="panel" style="margin-top:22px"><h3>Un signal très faible</h3>
+   <div class="panel" style="margin-top:18px"><h3>Un signal très faible</h3>
     <p>Le faisceau s'élargit énormément pendant le trajet. Sur des milliards de milliards de particules de lumière envoyées, seule une poignée revient jusqu'au télescope. La station écoute donc un <b>écho</b> très faible.</p></div>
   </div>
  </div>
-</div></section>
 
-<section id="galerie"><div class="wrap">
- <div class="sec-head"><span class="kicker">// 03 · Archives NASA</span><h2>Les réflecteurs sur la Lune</h2></div>
+ <h3 class="tech-h" style="margin-top:46px"><span>3</span> Les réflecteurs posés sur la Lune</h3>
  <div class="gallery">
-  <figure><div class="photo ph-tall" ><img src="https://commons.wikimedia.org/wiki/Special:FilePath/ALSEP_AS14-67-9386.jpg?width=1000" alt="APOLLO 14 · FRA MAURO" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">APOLLO 14 · FRA MAURO</div></div><figcaption>Le réflecteur d'Apollo 14, posé en février 1971.</figcaption></figure>
-  <figure><div class="photo ph-tall" ><img src="https://commons.wikimedia.org/wiki/Special:FilePath/AS15-88-11866_-_Apollo_15_flag,_rover,_LM,_Irwin_-_restoration1.jpg?width=1000" alt="APOLLO 15 · HADLEY" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">APOLLO 15 · HADLEY</div></div><figcaption>Le site d'Apollo 15, où se trouve le plus grand réflecteur.</figcaption></figure>
-  <figure><div class="photo ph-tall" ><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lunar_retroreflector_locations.jpg?width=1000" alt="CARTE · 5 RÉFLECTEURS" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">CARTE · 5 RÉFLECTEURS</div></div><figcaption>Position des réflecteurs Apollo (A) et Lunokhod (L) sur la face visible.</figcaption></figure>
+  <figure><div class="photo ph-tall"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/ALSEP_AS14-67-9386.jpg?width=1000" alt="APOLLO 14 · FRA MAURO" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">APOLLO 14 · FRA MAURO</div></div><figcaption>Le réflecteur d'Apollo 14, posé en février 1971.</figcaption></figure>
+  <figure><div class="photo ph-tall"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/AS15-88-11866_-_Apollo_15_flag,_rover,_LM,_Irwin_-_restoration1.jpg?width=1000" alt="APOLLO 15 · HADLEY" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">APOLLO 15 · HADLEY</div></div><figcaption>Le site d'Apollo 15, où se trouve le plus grand réflecteur (300 prismes).</figcaption></figure>
+  <figure><div class="photo ph-tall"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lunar_retroreflector_locations.jpg?width=1000" alt="CARTE · 5 RÉFLECTEURS" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">CARTE · 5 RÉFLECTEURS</div></div><figcaption>Position des réflecteurs Apollo (A) et Lunokhod (L) sur la face visible.</figcaption></figure>
  </div>
- <div class="next"><a class="cta" href="lune.html">Suivant : la Lune →</a></div>
+ <div class="next"><a class="cta" href="histoire.html">Suivant : l'histoire des missions →</a></div>
 </div></section>
 </main>
 <footer><div class="wrap">
 <div><b class="mono" style="color:var(--txt)">ÉCHO-LUNE</b> · Réseau Pacifique de télémétrie laser<br>Programme éducatif · Collèges de Nouvelle-Calédonie</div>
 <div class="mono" style="font-size:11px">Photographies : NASA (domaine public), via Wikimedia Commons<br>Console pédagogique · données de tir simulées</div>
 </div></footer>
-<script src="common.js"></script>
+<script src="common.js"></script><script src="scene.js"></script>
 </body></html>

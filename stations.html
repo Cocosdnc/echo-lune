@@ -7,27 +7,55 @@
 <canvas id="stars"></canvas>
 <header class="topbar"><div class="wrap">
 <a class="brand" href="index.html"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#3fe0ff" stroke-width="1.5"/><circle cx="27" cy="13" r="5" fill="#d8e7ff"/><path d="M6 30 L27 13" stroke="#ff4d6d" stroke-width="1.6"/><path d="M27 13 L10 33" stroke="#4dff9a" stroke-width="1.2" stroke-dasharray="2 2"/><circle cx="20" cy="20" r="13" fill="none" stroke="#3fe0ff" stroke-width=".6" opacity=".5"/></svg><div><b>ÉCHO-LUNE</b><small>Réseau Pacifique de télémétrie laser</small></div></a>
-<nav><a href="index.html">Accueil</a><a href="lune.html">La Lune</a><a href="stations.html" class=on>Stations</a><a href="console.html">Console de tir</a></nav><div class="status-pill">LIAISON ACTIVE</div></div></header>
+<nav><a href="index.html">Accueil</a><a href="histoire.html">Histoire</a><a href="lune.html">La Lune</a><a href="stations.html" class=on>Stations</a></nav><div class="status-pill">LIAISON ACTIVE</div></div></header>
 <main>
-<div class="page-hero"><div class="wrap"><div class="sec-head"><span class="kicker">// Réseau mondial</span><h2>Les stations qui tirent sur la Lune</h2></div></div></div>
+<div class="page-hero"><div class="wrap"><div class="sec-head"><span class="kicker">// Réseau mondial · choisissez une station</span><h2>Les stations qui tirent sur la Lune</h2></div>
+<p class="muted" style="margin-top:-8px">Cliquez sur une station pour demander l'accès.</p></div></div>
 <section style="border:none;padding-top:10px"><div class="wrap">
- <figure><div class="photo ph-wide" ><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Goddard_Spaceflight_Center_Laser_Ranging_Facility.jpg?width=1600" alt="TIR LASER EN COURS · FAISCEAUX VERTS VERS LA LUNE" loading="lazy" referrerpolicy="no-referrer"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">TIR LASER EN COURS · FAISCEAUX VERTS VERS LA LUNE</div></div>
- <figcaption>Une station de télémétrie laser en action : les faisceaux verts visent un objet en orbite autour de la Lune.</figcaption></figure>
- <div class="grid3" style="margin-top:30px">
-  <div class="panel station"><span class="tag">France · Alpes-Maritimes</span><h3>Plateau de Calern (Grasse)</h3>
-   <p class="muted">Station française historique de télémétrie laser Lune, avec un télescope de 1,50 m de diamètre.</p></div>
-  <div class="panel station"><span class="tag">États-Unis · Nouveau-Mexique</span><h3>Apache Point (APOLLO)</h3>
-   <p class="muted">Télescope de 3,5 m. Son laser vert est si puissant qu'on voit le faisceau traverser le ciel la nuit.</p></div>
-  <div class="panel station active"><span class="tag">Nouvelle-Calédonie · Boulouparis</span><h3>Station de Bouraké</h3>
-   <p class="muted">Station européenne installée près de Boulouparis, face au lagon. C'est d'ici que partent les tirs de votre classe.</p>
-   <div class="sys" style="margin-top:14px"><div><span>État</span><span class="ok">● EN LIGNE</span></div><div><span>Accès élèves</span><span class="ok">AUTORISÉ</span></div></div></div>
+ <div class="grid3 st-pick">
+  <button class="panel station pick" data-st="fr">
+   <div class="ant">📡</div><span class="tag">France · Alpes-Maritimes</span><h3>Plateau de Calern (Grasse)</h3>
+   <p class="muted">Station française historique de télémétrie laser Lune, avec un télescope de 1,50 m de diamètre.</p>
+   <div class="st-state mono">◌ Demander l'accès</div></button>
+  <button class="panel station pick" data-st="us">
+   <div class="ant">📡</div><span class="tag">États-Unis · Nouveau-Mexique</span><h3>Apache Point (APOLLO)</h3>
+   <p class="muted">Télescope de 3,5 m. Son laser vert est si puissant qu'on voit le faisceau traverser le ciel la nuit.</p>
+   <div class="st-state mono">◌ Demander l'accès</div></button>
+  <button class="panel station pick" data-st="nc">
+   <div class="ant">📡</div><span class="tag">Nouvelle-Calédonie · Boulouparis</span><h3>Station de Bouraké</h3>
+   <p class="muted">Station européenne installée près de Boulouparis, face au lagon.</p>
+   <div class="st-state mono">◌ Demander l'accès</div></button>
  </div>
- <div class="next"><a class="cta" href="console.html">Accéder à la console de tir →</a></div>
+ <div id="stMsg" class="st-msg" role="status" aria-live="polite"></div>
+ <div id="stOpen" class="st-open" hidden>
+  <div class="grid2" style="align-items:center">
+   <figure><div class="photo ph-wide"><img src="img/bourake.jpg" alt="STATION DE BOURAKÉ · BOULOUPARIS · NOUVELLE-CALÉDONIE"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><div class="hud">STATION DE BOURAKÉ · BOULOUPARIS · NOUVELLE-CALÉDONIE</div></div>
+   <figcaption>La station de Bouraké, à Boulouparis (Nouvelle-Calédonie).</figcaption></figure>
+   <div class="panel" style="border-color:rgba(77,255,154,.55)">
+    <h3 style="color:var(--green)">✔ Station disponible · accès autorisé</h3>
+    <p>Liaison établie avec la station de Bouraké. Votre établissement est autorisé à utiliser la salle de tir pendant la fenêtre en cours.</p>
+    <div class="sys"><div><span>Station</span><span>BOURAKÉ-NC</span></div><div><span>État</span><span class="ok">● EN LIGNE</span></div><div><span>Laser</span><span class="ok">PRÊT</span></div><div><span>Autorisation</span><span class="ok">EL-NC-0472</span></div></div>
+    <a class="cta" href="console.html">Entrer dans la salle de tir →</a>
+   </div>
+  </div>
+ </div>
 </div></section>
 </main>
 <footer><div class="wrap">
 <div><b class="mono" style="color:var(--txt)">ÉCHO-LUNE</b> · Réseau Pacifique de télémétrie laser<br>Programme éducatif · Collèges de Nouvelle-Calédonie</div>
 <div class="mono" style="font-size:11px">Photographies : NASA (domaine public), via Wikimedia Commons<br>Console pédagogique · données de tir simulées</div>
 </div></footer>
-<script src="common.js"></script>
+<script src="common.js"></script><script>
+(()=>{const msg=document.getElementById('stMsg'),open=document.getElementById('stOpen');
+const NOM={fr:'Plateau de Calern',us:'Apache Point'};
+document.querySelectorAll('.pick').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.pick').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
+  const st=b.querySelector('.st-state');st.textContent='◌ Connexion…';msg.className='st-msg';msg.textContent='Connexion à la station en cours…';open.hidden=true;
+  setTimeout(()=>{
+    if(b.dataset.st==='nc'){st.textContent='● Station disponible';b.classList.add('ok');b.classList.remove('ko');
+      msg.className='st-msg ok';msg.textContent='✔ Station de Bouraké disponible : accès autorisé.';open.hidden=false;open.scrollIntoView({behavior:'smooth',block:'start'})}
+    else{st.textContent='✕ Station non disponible';b.classList.add('ko');
+      msg.className='st-msg ko';msg.textContent='✕ '+NOM[b.dataset.st]+' : station non disponible. Aucune fenêtre de tir ouverte pour votre établissement.'}
+  },700)}));})();
+</script>
 </body></html>

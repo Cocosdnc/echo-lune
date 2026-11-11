@@ -20,6 +20,7 @@ function rgbOf(l){
   return `rgb(${c(r)},${c(g)},${c(b)})`;
 }
 const GREY='#8d97aa';
+const GREYT='rgba(141,151,170,.38)';   // UV / IR : gris translucide (invisible pour l'œil)
 function info(l){
   if(l<VIS0) return {dom:'Ultraviolet',nom:'invisible pour l\'œil',col:GREY,vis:false};
   if(l>VIS1) return {dom:'Infrarouge',nom:'invisible pour l\'œil',col:GREY,vis:false};
@@ -61,8 +62,8 @@ const xOf=(l,w)=>PAD+(l-LMIN)/(LMAX-LMIN)*(w-2*PAD);
 const lOf=(x,w)=>Math.round(Math.max(LMIN,Math.min(LMAX,LMIN+(x-PAD)/(w-2*PAD)*(LMAX-LMIN))));
 function drawSpec(){const {c,w,h}=S;c.clearRect(0,0,w,h);const y=18,bh=Math.max(18,Math.min(34,h-44));
   // UV et IR : gris hachuré
-  [[LMIN,VIS0],[VIS1,LMAX]].forEach(([a,b])=>{const x0=xOf(a,w),x1=xOf(b,w);c.fillStyle='#2a3242';c.fillRect(x0,y,x1-x0,bh);
-    c.save();c.beginPath();c.rect(x0,y,x1-x0,bh);c.clip();c.strokeStyle='rgba(141,151,170,.35)';c.lineWidth=1;
+  [[LMIN,VIS0],[VIS1,LMAX]].forEach(([a,b])=>{const x0=xOf(a,w),x1=xOf(b,w);c.fillStyle='rgba(42,50,66,.4)';c.fillRect(x0,y,x1-x0,bh);
+    c.save();c.beginPath();c.rect(x0,y,x1-x0,bh);c.clip();c.strokeStyle='rgba(141,151,170,.18)';c.lineWidth=1;
     for(let x=x0-bh;x<x1;x+=8){c.beginPath();c.moveTo(x,y+bh);c.lineTo(x+bh,y);c.stroke()}c.restore()});
   for(let l=VIS0;l<VIS1;l++){c.fillStyle=rgbOf(l);c.fillRect(xOf(l,w),y,xOf(l+1,w)-xOf(l,w)+1,bh)}
   c.font='600 12px "JetBrains Mono",monospace';c.textAlign='center';
@@ -96,7 +97,7 @@ function get(){const I=info(lam);return {lam,col:I.col,vis:I.vis,dom:I.dom,nom:I
 /* --- sinusoïde : la période à l'écran est proportionnelle à λ --- */
 function drawSin(){const {c,w,h}=N;c.clearRect(0,0,w,h);
   shown+=(lam-shown)*.12;                           // s'étire / se contracte en douceur
-  const col=info(lam).vis?info(Math.round(shown)).col:GREY;
+  const col=info(lam).vis?info(Math.round(shown)).col:GREYT;
   const k=(w-40)/(LMAX*2.2);                        // px par nm : ≥ 2 périodes à 1 500 nm
   const A=Math.min(h*.24,60), cy=Math.max(h*.5,A+34), P=shown*k, x0=20, x1=w-20;
   // axe
